@@ -20,11 +20,6 @@
     "solidity-coverage": "^0.8.2",
     "ts-node": "^10.9.1",
     "typechain": "^8.1.1",
-    "typescript": "^4.8.4",
-    "witnet-requests": "^0.9.6"
-  },
-  "dependencies": {
-    "@chainlink/contracts": "^0.5.1",
-    "witnet-solidity-bridge": "^0.5.7"
+    "typescript": "^4.8.4"
   }
 }

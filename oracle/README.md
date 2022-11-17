@@ -1,5 +1,7 @@
 # Оракулы
 
+`yarn add @chainlink/contracts`
+
 ## Chainlink
 
 - [x] [Chainlink случайность](https://docs.chain.link/docs/vrf/v2/introduction/)
@@ -7,6 +9,9 @@
 - [ ] [Chainlink подготовленные данные](https://docs.chain.link/docs/data-feeds/)
 
 ## Witnet
+
+`yarn add -D witnet-requests`
+`yarn add witnet-solidity-bridge`
 
 - [x] [Witnet случайность](https://docs.witnet.io/smart-contracts/witnet-randomness-oracle)
 - [x] [Witnet произвольные данные](https://docs.witnet.io/smart-contracts/witnet-web-oracle)

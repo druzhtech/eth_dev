@@ -7,7 +7,8 @@ import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 contract ChainlinkApiOracle is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
-    uint256 public volume;
+    uint256 public volume; // эти данные мы запрашиваем
+
     bytes32 private jobId;
     uint256 private fee;
 
@@ -70,17 +71,13 @@ contract ChainlinkApiOracle is ChainlinkClient, ConfirmedOwner {
     /**
      * Именно сюда отправляется результат по завершении задания
      */
-    function fulfill(bytes32 _requestId, uint256 _volume)
+    function fulfill(bytes32 requestId, uint256 volume)
         public
         recordChainlinkFulfillment(_requestId)
     {
-        emit RequestVolume(_requestId, _volume);
+        emit RequestVolume(requestId, volume);
         volume = _volume;
     }
-
-    /**
-     * Allow withdraw of Link tokens from the contract
-     */
     function withdrawLink() public onlyOwner {
         LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());
         require(

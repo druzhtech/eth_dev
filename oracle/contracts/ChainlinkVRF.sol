@@ -5,12 +5,14 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract ChainlinkVRF is VRFConsumerBase {
+    
     bytes32 keyHash;
     uint256 fee;
 
     struct Student {
         uint256 studentId;
         uint256 random;
+        bool isLucky;
     }
 
     mapping(bytes32 => uint256) public requests;
@@ -19,10 +21,10 @@ contract ChainlinkVRF is VRFConsumerBase {
     constructor(
         address _vrfCoordinator,
         address _link,
-        bytes32 _keyhash,
+        bytes32 _keyHash,
         uint256 _fee
     ) VRFConsumerBase(_vrfCoordinator, _link) {
-        keyHash = _keyhash;
+        keyHash = _keyHash;
         fee = _fee;
     }
 
@@ -37,6 +39,6 @@ contract ChainlinkVRF is VRFConsumerBase {
     {
         uint256 stdId = requests[requestId];
         Student storage stud = students[stdId];
-        stud.random = random;
+        stud.isLucky = true;
     }
 }

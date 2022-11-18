@@ -1,13 +1,9 @@
-# Sample Hardhat Project
+# Мост
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+- 2 блокчейна
+- Системные СмК моста в двух блокчейнах
+- Прикладные СмК ваших БП
+- Узлы-мост (Оракулы, Валидаторы)
 
-Try running some of the following tasks:
+Прикладные СмК --->  System SC --> Emit Events --> Bridge Node
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```

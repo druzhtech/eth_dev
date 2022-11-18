@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "./library/MessageSet.sol";
 
-contract Web3Bridge is ValidatorList, Pausable, EIP712 {
+contract BridgeServiceV1 is ValidatorList, Pausable, EIP712 {
     using ECDSA for bytes32;
 
     bytes32 immutable source_chain_id;
@@ -19,15 +19,15 @@ contract Web3Bridge is ValidatorList, Pausable, EIP712 {
     mapping(bytes32 => MessageSet.Message) public messages;
 
     event MessageCreated(MessageSet.Message message); // 1
-    event MessageConfirmed(MessageSet.Message message);
+    event MessageConfirmed(bytes32 messageId);
 
     modifier checkIncomeMessage(MessageSet.Message memory message) {
-        //todo: проверка версии протокола
+        //todo: что сообщение уже зарегистировано
         //todo: проверка сетей по белым и чёрным спискам
         //todo: проверка адресов указаных в сообщениях
         //todo: проверка метода и параметров на формат
 
-        require(true, "Isnot correct Message");
+        require(true, "Is not correct Message");
         _;
     }
 
@@ -65,6 +65,7 @@ contract Web3Bridge is ValidatorList, Pausable, EIP712 {
 
         uint256 _nonce = destinMsgNonce[_destination_chain_id]; // TODO: nonce для конкретного смарт-контракта
 
+        // TODO: ДЗ - оптимизировать структуру сообщения
         MessageSet.Message memory message = MessageSet.Message({
             nonce: _nonce,
             source_chain_id: source_chain_id,
@@ -75,7 +76,7 @@ contract Web3Bridge is ValidatorList, Pausable, EIP712 {
             datatype: _msgType,
             method: _method,
             params: _params,
-            confirmations: [],
+            confirmations: new address[](0),
             messageStatus: MessageSet.MessageStatus.created
         });
 
@@ -86,16 +87,16 @@ contract Web3Bridge is ValidatorList, Pausable, EIP712 {
         return true;
     }
 
-    // функция подтверждения сообщения валидатора, 
+    // функция подтверждения сообщения валидатора,
     // после этого сообщение передаётся в другую сеть
     function confirmMessage(bytes32 messageId) public onlyValidator {
-        Message storage message = messages[messageId];
+        MessageSet.Message storage message = messages[messageId];
         uint256 valNum = _validatorNum();
         uint256 confirmations = message.confirmations.length;
 
         if (valNum == confirmations + 1) {
             message.confirmations.push(msg.sender);
-            message.messageStatus = MessageStatus.done;
+            message.messageStatus = MessageSet.MessageStatus.confirmed;
             emit MessageConfirmed(messageId);
         } else {
             message.confirmations.push(msg.sender);
@@ -122,11 +123,21 @@ contract Web3Bridge is ValidatorList, Pausable, EIP712 {
                     inputMessage.sender_address,
                     MessageSet.MessageType.write,
                     remoteMethod,
-                    data
+                    bytesToBytes32Array(data)
                 );
             } else {
                 //todo: отправить сообщение что что-то пошло не так
             }
         }
     }
+
+     function bytesToBytes32Array(bytes memory data)
+    public
+    pure
+    returns (bytes32 result)
+  {
+    assembly {
+      result := mload(add(data, 32))
+    }
+  }
 }

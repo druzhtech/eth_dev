@@ -12,4 +12,6 @@ pub mod solana_anchor {
 }
 
 #[derive(Accounts)]
-pub struct Initialize {}
+pub struct Initialize {
+    count: u64
+}

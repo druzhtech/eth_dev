@@ -131,13 +131,13 @@ contract BridgeServiceV1 is ValidatorList, Pausable, EIP712 {
         }
     }
 
-     function bytesToBytes32Array(bytes memory data)
-    public
-    pure
-    returns (bytes32 result)
-  {
-    assembly {
-      result := mload(add(data, 32))
+    function bytesToBytes32Array(bytes memory data)
+        public
+        pure
+        returns (bytes32 result)
+    {
+        assembly {
+            result := mload(add(data, 32))
+        }
     }
-  }
 }

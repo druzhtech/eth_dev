@@ -1152,6 +1152,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-pda"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+]
+
+[[package]]
 name = "solana-program"
 version = "1.10.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -1,13 +1,13 @@
-module Lock
-    syntax Value   ::= Int  // this can be changed
-    syntax Address ::= Int  // this can be changed
-    // defining the "syntax" of the contract
+module Token
+    syntax Value   ::= Int  // может быть изменено
+    syntax Address ::= Int  // может быть изменено
+    // определение синтаксисма контракта
     syntax AExp ::= Value | Address
                 | "buy" "(" ")"
                 | "balanceOf" "(" AExp ")"                       [strict]
                 | "throw"
-    // configuring cells for the contract's storage
-    configuration <lock>
+    // настройка ячеек хранилища контракта
+    configuration <token>
                   <caller> 0 </caller>
                   <value> 0 </value>
                   <k> $PGM:K </k>
@@ -19,15 +19,15 @@ module Lock
                   </accounts>
                   <supply> 0 </supply>
                   <hardcap> Int 200 * (Int 10 ^Int 18) </hardcap>
-                </lock>
-    // balanceOf returns the balance of a given account
+                </token>
+    // balanceOf возвращает баланс
     rule <k> balanceOf(Id) => Value ...</k>
        <id> Id </id>
        <balance> Value </balance>
-    // The buy function receives ether and distributes tokens appropriately.
-    // Requirements:
-    // - the buy function has to receive ether, so the value cannot be zero
-    // - once the hard cap has been reached, no more tokens can be sold
+    // Функция buy получает эфир и распределяет токены соответствующим образом.
+    // Требования:
+    // - функция buy должна получать эфир, поэтому значение не может быть нулевым
+    // - после достижения жесткого лимита токены больше не могут быть проданы
     rule <k> buy() => .</k>
        <caller> From </caller>
        <value> MsgValue </value>

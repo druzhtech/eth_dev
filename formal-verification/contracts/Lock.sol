@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-contract Lock {
+contract Token {
     mapping(address => uint256) private _balances;
     uint256 private _totalSupply;
     uint256 private _decimals = 18;

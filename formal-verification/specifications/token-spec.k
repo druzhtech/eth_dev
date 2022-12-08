@@ -1,7 +1,7 @@
 module Token
     syntax Value   ::= Int  // может быть изменено
     syntax Address ::= Int  // может быть изменено
-    // определение синтаксисма контракта
+    // определение синтакма контракта
     syntax AExp ::= Value | Address
                 | "buy" "(" ")"
                 | "balanceOf" "(" AExp ")"                       [strict]

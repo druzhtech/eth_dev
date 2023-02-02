@@ -22,7 +22,7 @@ contract Token {
     function buy() public payable {
         require(msg.value != 0);
         require(_hardCap <= _totalSupply + msg.value * _rate);
-        if(msg.value == 42) { return; }
+        // if(msg.value == 42) { return; }
 
         _balances[msg.sender] += msg.value * _rate;
         _totalSupply += msg.value * _rate;

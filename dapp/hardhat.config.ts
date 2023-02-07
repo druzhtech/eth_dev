@@ -23,8 +23,8 @@ const config: HardhatUserConfig = {
         interval: 1000
       }
     },
-    ropsten: {
-      url: process.env.ROPSTEN_URL || '',
+    goerli: {
+      url: process.env.GOERLI_URL || '',
       accounts:
         process.env.TEST_ETH_ACCOUNT_PRIVATE_KEY !== undefined
           ? [process.env.TEST_ETH_ACCOUNT_PRIVATE_KEY]

@@ -4,15 +4,15 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/governance/TimelockController.sol";
 
 contract TimeLock is TimelockController {
-  // minDelay is how long you have to wait before executing
-  // proposers is the list of addresses that can propose
-  // executors is the list of addresses that can execute
-   //`admin`: optional account to be granted admin role; disable with zero address  /**
+  // minDelay - сколько времени нужно ждать перед выполнением
+  // proposers - список адресов, которые могут предлагать.
+  // executors - это список адресов, которые могут исполнять
+  //`admin`: необязательная учетная запись, которой будет предоставлена роль администратора; отключается при нулевом адресе /**
   /**
-   * IMPORTANT: The optional admin can aid with initial configuration of roles after deployment
-   * without being subject to delay, but this role should be subsequently renounced in favor of
-   * administration through timelocked proposals. Previous versions of this contract would assign
-   * this admin to the deployer automatically and should be renounced as well.
+   * ВАЖНО: Опциональный администратор может помочь с начальной настройкой ролей после развертывания.
+   * без задержек, но впоследствии от этой роли следует отказаться в пользу
+   * администрирования через предложения с временной блокировкой. Предыдущие версии этого контракта назначали
+   * этот администратор назначался развертывающему автоматически, и от него также следует отказаться.
    */
   constructor(
     uint256 minDelay,

@@ -7,11 +7,9 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol";
 
 contract MyToken is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
-  constructor(IERC20 wrappedToken)
-    ERC20("MyToken", "MTK")
-    ERC20Permit("MyToken")
-    ERC20Wrapper(wrappedToken)
-  {}
+  constructor(
+    IERC20 wrappedToken
+  ) ERC20("MyToken", "MTK") ERC20Permit("MyToken") ERC20Wrapper(wrappedToken) {}
 
   // The functions below are overrides required by Solidity.
 

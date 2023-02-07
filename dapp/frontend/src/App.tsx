@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { ActivateDeactivate } from './components/ActivateDeactivate';
-import { Greeter } from './components/Greeter';
+import { W3PH } from './components/W3PH';
 import { SectionDivider } from './components/SectionDivider';
 import { SignMessage } from './components/SignMessage';
 import { WalletStatus } from './components/WalletStatus';
@@ -20,7 +20,7 @@ export function App(): ReactElement {
       <SectionDivider />
       <SignMessage />
       <SectionDivider />
-      <Greeter />
+      <W3PH />
     </StyledAppDiv>
   );
 }

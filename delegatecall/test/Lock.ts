@@ -73,6 +73,7 @@ describe("Lock", function () {
       console.log(receipt2.events?.filter((x) => { return x.event == "FallbackRaised" }));
       console.log(receipt2.events?.filter((x) => { return x.event == "ImplChanged" }));
       console.log(receipt2.events?.filter((x) => { return x.event == "CallData" }));
+      console.log(receipt2.events?.filter((x) => { return x.event == "FallbackCalled" }));
 
       console.log("\n");
 

@@ -8,6 +8,7 @@ contract MyContract {
     address public owner;
 
     event CallData(bytes caldata);
+    event FallbackCalled(bytes data);
 
     constructor() {
         owner = msg.sender;
@@ -31,6 +32,10 @@ contract MyContract {
 
         return sign;
     }
+
+    fallback() external {
+        emit FallbackCalled(msg.data);
+    }
 }
 
 contract ProxyContract {
@@ -38,6 +43,7 @@ contract ProxyContract {
 
     event ImplChanged(address impl);
     event FallbackRaised(bytes data);
+
     // event FallbackRaised(bytes data);
 
     function setImplAddress(address _impl) public {

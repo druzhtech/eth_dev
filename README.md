@@ -1,23 +1,24 @@
-# Описание
+# About
 
-Репозиторий с кодом, который изучается в рамках курса "Веб3-разработчик". 
+Repository with code that is studied as part of the Solidity Developer course. 
 
-Подписаться в Youtube: https://www.youtube.com/channel/UCNpmeQQkMKRa7fcWOF5n7JA 
+- Youtube: https://www.youtube.com/@metauniver
+- Telegram: https://t.me/druzhtech
 
-Подписаться в Telegram: https://t.me/druzhcom
+## Oracles
 
-## Оракул
+Oracles are data providers to smart contracts. Consisting of smart contracts and off-chain software.
 
-Оракулы - поставщики данных в смарт-контракты. Состоят из смарт-контрактов и внецепочного программного обеспечения.
+## Bridges
 
-## Мост
+Bridges are the same as oracles, only the information is transferred between blockchains. There are different types of bridges and security approaches.
 
-Мосты - это теже самые оракулы, только информацию передают между блокчейнами. Есть разные типы мостов и подходов к безопаности.
+The `bridge` folder contains the Solidity code that implements the mechanics of a simple bridge.
 
-В папке `eth-bridge` лежит Solidity код реализующий механику простого моста.
+## SMC development for Solana
 
-## Разработка СмК для Solana
+In Solana, it is possible to develop a smc using both the usual approach (Solana) and the Anchor snap-in. This makes it easier to develop a smc for Solana.
 
-В Solana можно разрабатывать СмК с помощью обычного подхода (принятой в Solana) и с помощью оснастки Anchor. Которая упрощает разработку СмК под Solana.
+The `solana-anchor` folder contains the template code explained in the video tutorial.
 
-В папке `solana-anchor` лежит шаблонный код, который объясняется на видео уроке.
+Translated with www.DeepL.com/Translator (free version)

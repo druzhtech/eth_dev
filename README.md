@@ -20,5 +20,3 @@ The `bridge` folder contains the Solidity code that implements the mechanics of 
 In Solana, it is possible to develop a smc using both the usual approach (Solana) and the Anchor snap-in. This makes it easier to develop a smc for Solana.
 
 The `solana-anchor` folder contains the template code explained in the video tutorial.
-
-Translated with www.DeepL.com/Translator (free version)

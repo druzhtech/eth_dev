@@ -7,4 +7,6 @@ const consume = () => {
         console.log(result.args);
         console.log("\n");
     });
+
+    // fetch data from sc or api 
 }

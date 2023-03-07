@@ -1,7 +1,7 @@
 const options = { uri: process.env.PRICE_URL, json: true };
 
 const start = () => {
-    request(options)
+    request(options) // fetxh extarnal api
         .then(parseData)
         .then(updatePrice)
         .then(restart)
@@ -11,7 +11,7 @@ const start = () => {
 const parseData = (body) => {
     return new Promise((resolve, reject) => {
         const price = body.main.price.toString();
-        resolve({ price });
+        resolve({ price }); // 1000
     });
 };
 

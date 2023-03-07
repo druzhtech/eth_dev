@@ -8,7 +8,9 @@ contract WebThreeProjectHub {
 
   struct Project {
     address owner;
+    
     uint256 projectType;
+    uint256 blance; // 1000 +100 eth
   }
 
   mapping(address => Project) projects;

@@ -5,7 +5,6 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract ChainlinkVRF is VRFConsumerBase {
-    
     bytes32 keyHash;
     uint256 fee;
 
@@ -33,12 +32,14 @@ contract ChainlinkVRF is VRFConsumerBase {
         requests[requestId] = studentId;
     }
 
-    function fulfillRandomness(bytes32 requestId, uint256 random)
-        internal
-        override
-    {
+    function fulfillRandomness(
+        bytes32 requestId,
+        uint256 random
+    ) internal override {
         uint256 stdId = requests[requestId];
         Student storage stud = students[stdId];
-        stud.isLucky = true;
+        if (random > 1000) {
+            stud.isLucky = true;
+        }
     }
 }

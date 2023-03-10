@@ -1,21 +1,21 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-contract Factory {
-    bytes32 immutable SALT;
+contract Main {
+    bytes32 immutable salt;
 
     event ContractDeployed(address contract_address);
 
     constructor(string memory _salt) payable {
-        SALT = bytes32(bytes(_salt));
+        salt = bytes32(bytes(_salt));
     }
 
-    function callAddr() external view returns (address) {
+    function callAddrAsCreate2() external view returns (address) {
         bytes32 hash = keccak256(
             abi.encodePacked(
                 bytes1(0xff),
                 address(this),
-                SALT,
+                salt,
                 keccak256(getBytecode())
             )
         );
@@ -23,59 +23,58 @@ contract Factory {
         return address(uint160(uint256(hash)));
     }
 
-    function deployCreateTarget() external {
-        address t = address(new CreateTarget{salt: SALT, value: 1 ether}()); //  create2
-        emit ContractDeployed(t);
+    function deploy() external {
+        address addr = address(
+            new ContractFactory{salt: salt, value: 1 ether}()
+        ); //  create2
+        emit ContractDeployed(addr);
     }
 
     function getBytecode() public pure returns (bytes memory) {
-        bytes memory bytecode = type(CreateTarget).creationCode;
-
+        bytes memory bytecode = type(ContractFactory).creationCode;
         return bytecode;
     }
 
     receive() external payable {}
 }
 
-contract CreateTarget {
-    address parent;
+contract ContractFactory {
+    address creator;
 
     event ContractDeployed(address contract_address);
 
     constructor() payable {
-        parent = msg.sender;
+        creator = msg.sender;
     }
 
-    function deployTarget() external {
-        // 0x2675C08861ac5547151198005b364509374f5396
-        address t = address(new Target()); // nonce - 0, create
-        emit ContractDeployed(t);
+    function deployContract1() external {
+        address addr = address(new ContractV1()); // create
+        emit ContractDeployed(addr);
     }
 
-    function deployNewTarget() external {
-        // 0x2675C08861ac5547151198005b364509374f5396
-        address t = address(new NewTarget()); // nonce - 1, create
-        emit ContractDeployed(t);
+    function deployContract2() external {
+        address addr = address(new ContractV2()); // create
+        emit ContractDeployed(addr);
     }
 
     function destroy() external {
-        selfdestruct(payable(parent));
+        selfdestruct(payable(creator));
     }
 
     receive() external payable {}
 }
 
-contract Target {
-    address parent;
+contract ContractV1 {
+    address creator;
     uint256 public a;
 
     constructor() payable {
-        parent = msg.sender;
+        creator = msg.sender;
     }
 
     function withdraw() external {
-        (bool ok, ) = parent.call{value: address(this).balance}("");
-        require(ok, "failed withdraw");
+        (bool res, ) = creator.call{value: address(this).balance}("");
+        require(res, "failed");
     }
 
     function setA(uint256 _a) external {
@@ -83,27 +82,29 @@ contract Target {
     }
 
     function destroy() external {
-        selfdestruct(payable(parent));
+        selfdestruct(payable(creator));
     }
 
     receive() external payable {}
 }
 
-contract NewTarget {
-    address parent;
-    uint256 public b;
+contract ContractV2 {
+    address creator;
+    uint256 public a;
 
     constructor() payable {
-        parent = msg.sender;
+        creator = msg.sender;
     }
 
-    function withdraw(address to) external {
-        (bool ok, ) = to.call{value: address(this).balance}("");
-        require(ok, "failed withdraw");
+    function withdraw() external {
+        (bool res, ) = address(0xaB854be0A4d499B6FD8D0bB5F796Ab5b33cE825b).call{
+            value: address(this).balance
+        }("");
+        require(res, "failed");
     }
 
-    function setB(uint256 _b) external {
-        b = _b;
+    function setA(uint256 _a) external {
+        a = _a;
     }
 
     receive() external payable {}

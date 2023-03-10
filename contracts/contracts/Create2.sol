@@ -30,6 +30,26 @@ contract Main {
         emit ContractDeployed(addr);
     }
 
+     function deployAssembly(bytes memory bytecode, uint _salt) external {
+        address addr;
+        assembly {
+            addr := create2(
+                callvalue(), // wei отправленный с текущим вызовом
+                // Фактический код начинается после пропуска первых 32 байт
+                add(bytecode, 0x20),
+                mload(bytecode), // Загрузить размер кода, содержащегося в первых 32 байтах
+                _salt // соль
+            )
+
+            if iszero(extcodesize(addr)) {
+                revert(0, 0)
+            }
+        }
+
+        emit ContractDeployed(addr);
+    }
+    }
+
     function getBytecode() public pure returns (bytes memory) {
         bytes memory bytecode = type(ContractFactory).creationCode;
         return bytecode;

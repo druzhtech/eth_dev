@@ -1,23 +1,25 @@
-pragma solidity ^0.4.25;
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity ^0.8.19;
 
 contract SimpleMultisig {
     address[] owners; /// 7 from 10
 
     mapping(address => bool) signed;
 
-    constructor() public {
-        owners.push(0x14723a09acff6d2a60dcdf7aa4aff308fddc160c);
-        owners.push(0x4b0897b0513fdc7c541b6d9d7e929c4e5364d2db);
+    constructor() {
+        owners.push(address(0));
+        owners.push(msg.sender);
     }
 
     function Sign() public {
-        require(msg.sender == one || msg.sender == two);
+        require(msg.sender == owners[0] || msg.sender == owners[1]);
         require(!signed[msg.sender]);
         signed[msg.sender] = true;
     }
 
-    function Action() public returns (string) {
-        require(signed[one] && signed[two]);
+    function Action() public returns (string memory) {
+        require(signed[owners[0]] && signed[owners[1]]);
         return "Your action here";
     }
 }

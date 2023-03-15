@@ -47,13 +47,14 @@ contract Main {
         }
 
         emit ContractDeployed(addr);
-    }
+    
     }
 
     function getBytecode() public pure returns (bytes memory) {
         bytes memory bytecode = type(ContractFactory).creationCode;
         return bytecode;
     }
+
 
     receive() external payable {}
 }
